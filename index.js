@@ -1,6 +1,5 @@
 const connection = require('./config/connection');
 const inquirer = require('inquirer');
-const consoleTable = require('console.table');
 const { viewDepartments,
         viewRoles,
         viewEmployees,
@@ -107,11 +106,11 @@ async function appStart() {
                     validate: (input) => (input ? true : 'An employee role ID is required.'),
                 },
                 {
-                    type: 'number',
+                    type: 'input',
                     name: 'managerId',
-                    message: 'Enter the Manager ID for the employee:',
+                    message: 'Enter the Manager ID for the employee (leave blank if no manager):',
                     validate: (input) => {
-                        if (input === '' || !isNaN(input)) {
+                        if (input === '' || !isNaN(parseInt(input))) {
                             return true;
                         } else {
                             return 'Please enter a valid Manager ID or leave it blank.';
@@ -119,7 +118,7 @@ async function appStart() {
                     },
                 },
             ]);
-            await addEmployee(firstName, lastName, roleId, managerId || null);
+            await addEmployee(firstName, lastName, roleId, managerId ? parseInt(managerId) : null);
             break;
 
         case 'Update an employee role':
