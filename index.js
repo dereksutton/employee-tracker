@@ -1,3 +1,4 @@
+// Import necessary modules
 const connection = require('./config/connection');
 const inquirer = require('inquirer');
 const { viewDepartments,
@@ -9,15 +10,17 @@ const { viewDepartments,
         updateEmployeeRole 
     } = require('./lib/queries');
 
-
+// Connection to the database
 connection.connect((err) => {
     if (err) throw err;
     console.log('Database successfully connected.');
     appStart();
 });
 
+// Main application loop when invoked
 async function appStart() {
     try {
+      // Prompt user for actions  
       const { action } = await inquirer.prompt([
         {
           type: 'list',
@@ -35,7 +38,7 @@ async function appStart() {
           ],
         },
       ]);
-  
+      // Execute the action based on user's choice
       switch (action) {
         case 'View all departments':
           await viewDepartments();
@@ -50,6 +53,7 @@ async function appStart() {
           break;
 
         case 'Add a department':
+            // Prompt user for the new department name
             const { departmentName } = await inquirer.prompt([
                 {
                     type: 'input',
@@ -58,10 +62,12 @@ async function appStart() {
                     validate: (input) => (input ? true : 'New department name is required.'),
                 },
             ]);
+            // Add the new department to the database
             await addDepartment(departmentName);
             break;
 
         case 'Add a role':
+            // Prompt user for new role details
             const { roleName, salary, departmentId } = await inquirer.prompt([
                 {
                     type: 'input',
@@ -82,10 +88,12 @@ async function appStart() {
                     validate: (input) => (input ? true : 'Department ID for the new role is required.'),
                 },
             ]);
+            // Add the new role to the database
             await addRole(roleName, salary, departmentId);
             break;
 
         case 'Add an employee':
+            // Prompt user for new employee details
             const { firstName, lastName, roleId, managerId } = await inquirer.prompt([
                 {
                     type: 'input',
@@ -118,10 +126,12 @@ async function appStart() {
                     },
                 },
             ]);
+            // Add the new employee to the database
             await addEmployee(firstName, lastName, roleId, managerId ? parseInt(managerId) : null);
             break;
 
         case 'Update an employee role':
+            // Prompt user for employee ID and new role ID
             const { employeeId, newRoleId } = await inquirer.prompt([
                 {
                     type: 'number',
@@ -136,19 +146,22 @@ async function appStart() {
                     validate: (input) => (input ? true : 'New Role ID is required.'),
                 },
             ]);
+            // Update the employee role in the database
             await updateEmployeeRole(employeeId, newRoleId);
             break;
 
         case 'Exit':
+          // Exit the application
           console.log('See ya later!');
           process.exit(0);
       }
-
+    // Restart main loop if the user doesn't choose to exit
     if (action !== 'Exit') {
         appStart();
     }  
 
     } catch (error) {
+      // Log any errors and exit the application
       console.error(error);
       process.exit(1);
     }
