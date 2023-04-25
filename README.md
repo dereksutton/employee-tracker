@@ -18,14 +18,16 @@ This is an employee tracker application that allows you to manage your company's
 ## Installation
 To install the application, first clone the repository to your local machine. Next, navigate to the project directory. Once inside the project directory, run the command `npm install` to install the needed dependencies. Next, create a .env file in the project's directory, and input your MySQL connection details as follows:
 
-DB_HOST=localhost
-DB_USER=your_mysql_username
-DB_PASS=your_mysql_password
-DB_NAME=employee_tracker_db
+1. DB_HOST=localhost
+2. DB_USER=your_mysql_username
+3. DB_PASS=your_mysql_password
+4. DB_NAME=employee_tracker_db
 
 Lastly, in MySQL Workbench or another MySQL client, please execute the `schema.sql` file in order to create the database, and then execute the `seeds.sql` file to populate the database with sample data.
 
 ## Usage
+Video URL to view a demonstration of the application's functionality: [Video](https://drive.google.com/file/d/1Kpdcg8kfkNAFfV1ocyij95Vo8PSNBFQt/view)
+
 To run the application, navigate to the project directory in your terminal and run the command `node index.js`. You will then be prompted with questions in the command-line regarding which action you want to make with the database. You can view, add, update, and/or delete departments, roles, and employees. 
 
 ## Features
