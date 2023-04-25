@@ -67,6 +67,10 @@ async function appStart() {
             break;
 
         case 'Add a role':
+            // First display the available departments and their respective ID's
+            console.log("Available Departments:");
+            await viewDepartments();
+
             // Prompt user for new role details
             const { roleName, salary, departmentId } = await inquirer.prompt([
                 {
@@ -93,6 +97,10 @@ async function appStart() {
             break;
 
         case 'Add an employee':
+            //Display the available roles and their respective IDs
+            console.log("Available Roles:");
+            await viewRoles();
+            
             // Prompt user for new employee details
             const { firstName, lastName, roleId, managerId } = await inquirer.prompt([
                 {
